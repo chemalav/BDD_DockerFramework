@@ -26,7 +26,7 @@ public class ProductListingPage {
 	
 	public void clickOn_AddToCart() {
 		btn_AddToCart.click();
-		Wait.untilJqueryIsDone(driver);
+		Wait.untilJqueryIsDone(driver,2);
 	}
 	
 	public void select_Product(int productNumber) {

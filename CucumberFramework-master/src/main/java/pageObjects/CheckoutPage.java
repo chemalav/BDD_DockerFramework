@@ -92,17 +92,17 @@ public class CheckoutPage {
 	
 	public void check_ShipToDifferentAddress(boolean value) {
 		if(!value) chkbx_ShipToDifferetAddress.click();
-		Wait.untilJqueryIsDone(driver);
+		Wait.untilJqueryIsDone(driver,2);
 	}
 	
 	public void select_Country(String countryName) {
 		drpdwn_CountryDropDownArrow.click();
-		Wait.untilJqueryIsDone(driver);
+		Wait.untilJqueryIsDone(driver, 2);
 
 		for(WebElement country : country_List){
 			if(country.getText().equals(countryName)) {
 				country.click();	
-				Wait.untilJqueryIsDone(driver);
+				Wait.untilJqueryIsDone(driver,2);
 				break;
 			}
 		}
@@ -111,7 +111,7 @@ public class CheckoutPage {
 	
 	public void select_County(String countyName) {
 		drpdwn_CountyDropDownArrow.click();
-		Wait.untilJqueryIsDone(driver);
+		Wait.untilJqueryIsDone(driver,2);
 		for(WebElement county : country_List){
 			if(county.getText().equals(countyName)) {
 				county.click();	
@@ -129,7 +129,7 @@ public class CheckoutPage {
 		}else {
 			new Exception("Payment Method not recognised : " + paymentMethod);
 		}
-		Wait.untilJqueryIsDone(driver);
+		Wait.untilJqueryIsDone(driver,2);
 		
 	}
 	
@@ -139,7 +139,7 @@ public class CheckoutPage {
 	
 	public void clickOn_PlaceOrder() {
 		btn_PlaceOrder.submit();
-		Wait.untilJqueryIsDone(driver);
+		Wait.untilJqueryIsDone(driver,2);
 		Wait.untilPageLoadComplete(driver);
 	}
 	

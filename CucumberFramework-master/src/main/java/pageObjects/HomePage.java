@@ -1,7 +1,11 @@
 package pageObjects;
 
+import java.time.Duration;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import managers.FileReaderManager;
 
@@ -14,7 +18,8 @@ public class HomePage {
 	}
 	
 	public void perform_Search(String search) {
-		driver.navigate().to(FileReaderManager.getInstance().getConfigReader().getApplicationUrl() + "/?s=" + search + "&post_type=product");
+		driver.findElement(By.name("q")).sendKeys("Selenium Java");	
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 	}
 	
 	public void navigateTo_HomePage() {

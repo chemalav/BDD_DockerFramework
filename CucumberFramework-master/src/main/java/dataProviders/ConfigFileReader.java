@@ -57,6 +57,10 @@ public class ConfigFileReader {
 		if(browserName == null || browserName.equals("chrome")) return DriverType.CHROME;
 		else if(browserName.equalsIgnoreCase("firefox")) return DriverType.FIREFOX;
 		else if(browserName.equals("iexplorer")) return DriverType.INTERNETEXPLORER;
+		else if(browserName.equals("safari")) return DriverType.SAFARI;
+		else if(browserName.equals("opera")) return DriverType.OPERA;
+		else if(browserName.equals("edge")) return DriverType.EDGE;
+		else if(browserName.equals("chromium")) return DriverType.CHROMIUM;
 		else throw new RuntimeException("Browser Name Key value in Configuration.properties is not matched : " + browserName);
 	}
 	
@@ -80,7 +84,9 @@ public class ConfigFileReader {
 	}
 	
 	public String getReportConfigPath(){
-		String reportConfigPath = properties.getProperty("reportConfigPath");
+		String reportConfigPath = System.getProperty("user.dir") + properties.getProperty("reportConfigPath");
+		System.out.println("Current path ::"+ reportConfigPath);
+
 		if(reportConfigPath!= null) return reportConfigPath;
 		else throw new RuntimeException("Report Config Path not specified in the Configuration.properties file for the Key:reportConfigPath");		
 	}

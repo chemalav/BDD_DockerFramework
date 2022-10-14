@@ -1,20 +1,24 @@
 package managers;
 
 import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+import io.github.bonigarcia.wdm.managers.ChromiumDriverManager;
 import enums.DriverType;
 import enums.EnvironmentType;
 
-public class WebDriverManager {
+public class DriversManager {
 	private WebDriver driver;
 	private static DriverType driverType;
 	private static EnvironmentType environmentType;
 	private static final String CHROME_DRIVER_PROPERTY = "webdriver.chrome.driver";
 	
-	public WebDriverManager() {
+	public DriversManager() {
 		driverType = FileReaderManager.getInstance().getConfigReader().getBrowser();
 		environmentType = FileReaderManager.getInstance().getConfigReader().getEnvironment();
 	}
@@ -38,16 +42,30 @@ public class WebDriverManager {
 		throw new RuntimeException("RemoteWebDriver is not yet implemented");
 	}
 	
-	private WebDriver createLocalDriver() {
-        switch (driverType) {	    
-        case FIREFOX : driver = new FirefoxDriver();
+	private WebDriver createLocalDriver() {	
+        switch (driverType) {
+        case FIREFOX : 
+        	driver = WebDriverManager.firefoxdriver().create();
 	    	break;
         case CHROME : 
-        	System.setProperty(CHROME_DRIVER_PROPERTY, FileReaderManager.getInstance().getConfigReader().getDriverPath());
-        	driver = new ChromeDriver();
+        	driver = WebDriverManager.chromedriver().create();
     		break;
-        case INTERNETEXPLORER : driver = new InternetExplorerDriver();
+        case INTERNETEXPLORER : 
+        	driver = WebDriverManager.iedriver().create();
     		break;
+		case CHROMIUM:
+			driver = WebDriverManager.chromiumdriver().create();
+			break;
+		case EDGE:
+			driver = WebDriverManager.edgedriver().create();
+			break;
+		case OPERA:
+			driver = WebDriverManager.operadriver().create();
+			break;
+		case SAFARI:
+			driver = WebDriverManager.safaridriver().create();
+		default:
+			break;
         }
         
         if(FileReaderManager.getInstance().getConfigReader().getBrowserWindowSize()) driver.manage().window().maximize();
@@ -57,7 +75,7 @@ public class WebDriverManager {
 	
 	public void quitDriver() {
 		driver.close();
-		driver.quit();		
+		//driver.quit();		
 	}
 
 }
