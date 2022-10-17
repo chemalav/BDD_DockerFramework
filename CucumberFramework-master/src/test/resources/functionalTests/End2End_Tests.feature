@@ -3,7 +3,7 @@ Description: The purpose of this feature is to test End 2 End integration.
  
 Scenario Outline: Customer place an order by purchasing an item from search	
 	Given user is on Home Page
-	When he search for "dress"
+	When he search for "selenium"
 	Then verify the order details
 Examples:
 	|customer|

@@ -18,8 +18,9 @@ public class HomePage {
 	}
 	
 	public void perform_Search(String search) {
-		driver.findElement(By.name("q")).sendKeys("Selenium Java");	
+		driver.findElement(By.name("q")).sendKeys(search);	
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+		
 	}
 	
 	public void navigateTo_HomePage() {
