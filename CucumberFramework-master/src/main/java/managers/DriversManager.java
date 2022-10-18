@@ -1,14 +1,15 @@
 package managers;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
-
+import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import io.github.bonigarcia.wdm.managers.ChromiumDriverManager;
 import enums.DriverType;
 import enums.EnvironmentType;
 
@@ -17,6 +18,8 @@ public class DriversManager {
 	private static DriverType driverType;
 	private static EnvironmentType environmentType;
 	private static final String CHROME_DRIVER_PROPERTY = "webdriver.chrome.driver";
+	String host="localhost";
+    MutableCapabilities mc;
 	
 	public DriversManager() {
 		driverType = FileReaderManager.getInstance().getConfigReader().getBrowser();
@@ -39,7 +42,28 @@ public class DriversManager {
 	}
 	
 	private WebDriver createRemoteDriver() {
-		throw new RuntimeException("RemoteWebDriver is not yet implemented");
+		try {
+		switch (driverType) {
+		case FIREFOX : 
+			mc=new FirefoxOptions();
+			break;
+		case CHROME :
+			mc = new ChromeOptions();
+			 break;
+		default:
+			break;
+		}
+		
+		if(System.getProperty("HUB_HOST") != null){
+	          host = System.getProperty("HUB_HOST");}
+		String completeUrl = "http://" + host + ":4444/wd/hub";
+		System.out.println(completeUrl);
+		this.driver = new RemoteWebDriver(new URL(completeUrl), mc);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		return driver;
 	}
 	
 	private WebDriver createLocalDriver() {	
